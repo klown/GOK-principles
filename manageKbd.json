@@ -1,0 +1,57 @@
+{
+    "keyboard": {
+        "name": "manage",
+        "commandprediction": false,
+        "wordcompletion": false,
+        "keys": {
+            "back": {
+                "left": 0,
+                "right": 1,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchBack",
+                "label": "back"
+            },
+            "activateWindow": {
+                "left": 1,
+                "right": 2,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchWindows",
+                "label": "Activate Window"
+            },
+            "settings": {
+                "left": 2,
+                "right": 3,
+                "top": 0,
+                "bottom": 1,
+                "type": "settings",
+                "label": "Settings"
+            },
+            "gok": {
+                "left": 0,
+                "right": 1,
+                "top": 1,
+                "bottom": 2,
+                "type": "normal",
+                "label": "Gok"
+            },
+            "other": {
+                "left": 1,
+                "right": 2,
+                "top": 1,
+                "bottom": 2,
+                "type": "normal",
+                "label": "Other"
+            },
+            "pointer": {
+                "left": 2,
+                "right": 3,
+                "top": 1,
+                "bottom": 2,
+                "type": "normal",
+                "label": "Pointer"
+            }
+        }
+    }
+}

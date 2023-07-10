@@ -18,7 +18,8 @@ The main elements are:
 - `key`
   - must be within a `<keyboard>` element
   - provides characteristics of a single key.
-  - attributes `left`, `right`, `top`, and `bottom` specify position in terms of columns and rows.
+  - attributes `left`, `right`, `top`, and `bottom` specify position in terms of
+    rows and columns.
   - attribute `type`, an enum:
 
       ```
@@ -29,22 +30,29 @@ The main elements are:
         ```
         { shift, ctrl, alt, capslock, mod4 }
         ```
-  - attribute `modifiertype`, optional and, if used, the `type=modifier` must be present.  The only values seen so far are `{ toggle, select-toggle }`.  A full example:
+  - attribute `modifiertype`, optional and, if used, the `type=modifier` must be
+    present.  The only values seen so far are `{ toggle, select-toggle }`.  A
+    full example:
 
         ```
         <key type="modifier" modifier="capslock" modifiertype="toggle">
           <label>Caps Lock</label>
         </key>
         ```
-  - attribute `action`, used with `type=mousebutton`, specifies the mouse button's action; enum:  `{ button1, button2, button3, double1, double2, double3, latch }`
+  - attribute `action`, used with `type=mousebutton`, specifies the mouse
+    button's action; enum:
+    `{ button1, button2, button3, double1, double2, double3, latch }`
 - `label`
   - must be nested within a `key` element
   - provides a label for the key, a human facing UI string.
 - `image`
-  - optional, must be nested within a `key` element, and partially or completely replaces the `<label>` element.
+  - optional, must be nested within a `key` element, and partially or completely
+    replaces the `<label>` element.
   - attribute `source`, the url of the image to use.
   - attribute `type`, possible values are `{ fixed:xx,yy, fit, ?? }`
-  - attribute `align`, how to position the image within the key; enumerated type: `{ left, right, ?? }` (The question marks, `??`, indicate that there may be other values.  The documentation is unclear).
+  - attribute `align`, how to position the image within the key; enumerated 
+    type: `{ left, right, ?? }` (The question marks, `??`, indicate that there
+    may be other values.  The documentation is unclear).
 - `output`
   - optional; must be nested within a `key` element.
   - defines any output caused by invoking the key.
@@ -53,10 +61,20 @@ The main elements are:
   - Example: `<output type="keysym">comma</output>`
 
 Note that there does not appear to be anything that specifies the number of
-rows and columns in a given keyboard.  It might be implcit in the `(left, top), (right, bottom)` coordinates for all of the key elements.
+rows and columns in a given keyboard.  It might be implcit in the
+`(left, top), (right, bottom)` coordinates for all of the key elements.
 
 ## XML Example -- Mouse Keyboard
-The "mouse keyboard" is a set of keys that can by used to indirectly manipulate the mouse pointer and mouse functionality.  There are keys for moving the mouse pointer around the screen and keys for clicking the mouse buttons virtually.
+The "mouse keyboard" is a set of keys that can by used to indirectly manipulate
+the mouse pointer and mouse functionality.  There are keys for moving the mouse
+pointer around the screen and keys for clicking the mouse buttons virtually. 
+This is taken from the GOK archive [mouse.kbd](https://gitlab.gnome.org/Archive/gok/-/blob/master/mouse.kbd.in) file.
+
+While there is no documentation explicitly saying so, it appears the keys are
+placed in order beginning with the key in the top/left corner of the keyboard
+and then listing them horizontally by row.  This inference is based on the
+coordinates given in the list of keys, and that they progress across and down
+a virtual grid, as one proceeds from `<key>` element to `<key>` element.
 
 ```
 <?xml version="1.0"?>
@@ -121,7 +139,14 @@ The "mouse keyboard" is a set of keys that can by used to indirectly manipulate 
 ## Example Using JSON
 This is a guess on how a GOK XML keyboard file could be repurposed using JSON instead of XML, where the names of the JSON fields are the same as the XML elements and their attributes.
 
-There are two possibilities with respect to the collection of keys in a given keyboard.  One is to simply list them as an array of key structures.  The other is a set of named keys.  In the first case, the `key` element is lost, but its structure is captured as a list of "anonymous" keys.
+### Keys as Anonymous Array
+
+There are two possibilities with respect to the collection of keys in a given keyboard.  One is to simply list them as an array of key structures.  The other is a set of named keys.  In both cases, the `key` element is no longer explicitly
+declared, but each key's structure is captured either within an array or as a
+named structure.
+
+The following is an example of the first way to capture the set of keys as simply
+an array:
 
 ```
 "keyboard": {
@@ -180,7 +205,11 @@ There are two possibilities with respect to the collection of keys in a given ke
 }
 ```
 
-In the second case, each key has a unique id.  The array is replaced with a `keys` block containing a set of key ids.  For illustrative purposes the id below is based on the key's label:
+### Keys as Named Structures
+
+In the second case, each key has a unique id.  The array is replaced with a
+`keys` block containing a set of key ids.  Each id acts as dictionary-key for a
+structure.  For illustrative purposes the ids are based on the key's label:
 
 ```
 {
@@ -241,3 +270,10 @@ In the second case, each key has a unique id.  The array is replaced with a `key
     }
 }
 ```
+
+#### Keyboards as JSON files:
+
+- [manageKbd.json](./manageKbd.json), based on [manage.kbd](https://gitlab.gnome.org/Archive/gok/-/blob/master/manage.kbd)
+- [mouseKbd.json](./mouseKbd.json), based on [mouse.kbd](https://gitlab.gnome.org/Archive/gok/-/blob/master/mouse.kbd.in)
+  - An image of the mouse keyboard is shown below:
+  <img src="https://wiki.ubuntu.com/Accessibility/Reviews/GOK?action=AttachFile&do=get&target=gok04.png" alt="The GOK mouse keyboard">
