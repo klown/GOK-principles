@@ -60,9 +60,7 @@ The main elements are:
   - contents of the element is the output value, e.g., "comma".
   - Example: `<output type="keysym">comma</output>`
 
-Note that there does not appear to be anything that specifies the number of
-rows and columns in a given keyboard.  It might be implcit in the
-`(left, top), (right, bottom)` coordinates for all of the key elements.
+Note that the number of rows and columns are not specified by the XML.  Instead it is implicit in the coordinates of the key elements taken as a whole.  The number of rows is the key with the largest `bottom` coordinate, and the number of columns, the key with the largest `right` coordinate.
 
 ## XML Example -- Mouse Keyboard
 The "mouse keyboard" is a set of keys that can by used to indirectly manipulate
@@ -136,17 +134,28 @@ a virtual grid, as one proceeds from `<key>` element to `<key>` element.
 </GOK:GokFile>
 ``` 
 
+The rendered keyboard is shown below:
+
+<figure style="text-align: center">
+  <img src="./GOK-screen-shots/gok-mouse.png" alt="GOK Mouse keyboard">
+</figure>
+
 ## Example Using JSON
-This is a guess on how a GOK XML keyboard file could be repurposed using JSON instead of XML, where the names of the JSON fields are the same as the XML elements and their attributes.
+This is a guess on how a GOK XML keyboard file could be repurposed using JSON
+instead of XML, where the names of the JSON fields are the same as the XML
+elements and their attributes.
 
-### Keys as Anonymous Array
+### Keys as an Array
 
-There are two possibilities with respect to the collection of keys in a given keyboard.  One is to simply list them as an array of key structures.  The other is a set of named keys.  In both cases, the `key` element is no longer explicitly
-declared, but each key's structure is captured either within an array or as a
-named structure.
+There are two possibilities with respect to the collection of keys in a given
+keyboard.  One is to simply list them as an array of key structures.  The other
+is a set of named keys.  In both cases, the `key` element is no longer
+explicitly declared, but each key's structure is captured either within an array
+or as a named structure.
 
-The following is an example of the first way to capture the set of keys as simply
-an array:
+The following is an example of the first way to capture the set of keys as a
+simple array.  Note that this is for another keyboard, named "Manage", chosen
+here because it is shorter.
 
 ```
 "keyboard": {
@@ -209,7 +218,11 @@ an array:
 
 In the second case, each key has a unique id.  The array is replaced with a
 `keys` block containing a set of key ids.  Each id acts as dictionary-key for a
-structure.  For illustrative purposes the ids are based on the key's label:
+structure.  For illustrative purposes the ids are based on the key's label.
+
+For a Bliss palette, imagine that the key ids are BCI identifiers or some other
+Bliss symbol identfier, that the `image` property is an url to a graphic for
+the Bliss symbol, and the `label` is the text that appears on the "key".
 
 ```
 {
@@ -273,7 +286,8 @@ structure.  For illustrative purposes the ids are based on the key's label:
 
 #### Keyboards as JSON files:
 
+The following are links to JSON versions of the "Manage" and "Mouse" GOK
+keyboards.
+
 - [manageKbd.json](./manageKbd.json), based on [manage.kbd](https://gitlab.gnome.org/Archive/gok/-/blob/master/manage.kbd)
 - [mouseKbd.json](./mouseKbd.json), based on [mouse.kbd](https://gitlab.gnome.org/Archive/gok/-/blob/master/mouse.kbd.in)
-  - An image of the mouse keyboard is shown below:
-  <img src="https://wiki.ubuntu.com/Accessibility/Reviews/GOK?action=AttachFile&do=get&target=gok04.png" alt="The GOK mouse keyboard">
