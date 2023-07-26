@@ -37,11 +37,10 @@ If the keyboard is built dynamically, the `GokKey->Type` and `GokKey->Target` ar
 
 ### Dynamic Keyboards
 
-All keyboards have a `bDynamciallyCreated` property, a boolean that declares if that keyboard was built from a static predefined keyboard (false), or if the keyboard was generated at runtime from some aspect of the GUI (true).  If the keyboard was created dynamically, and it has one or more navigation key(s), it is not pushed to the BranchStack when one of those navigation keys is activated.  The rationale for this is unclear at present, but I can speculate.
+All keyboards have a `bDynamciallyCreated` property, a boolean that declares if that keyboard was built from a static predefined keyboard (false), or if the keyboard was generated at runtime from some aspect of the GUI (true).  If the keyboard was created dynamically, and it has one or more navigation key(s), it is pushed onto the BranchStack only once when a navigation key is activated.  In contrast, a static keyboard can be pushed on the stack multiple times.
 
-As an example, suppose a keyboard is created dynamically to represent a "File" menu's menu items.  Those specific menu items are dependent on which window and application is frontmost when the keyboard is created.    Hence, the "File" keyboard is tied to a specific context at a specific time, and there is a chance that it will no longer be appropriate for the current time as time moves forward.  A safe approach is to recreate the "File" keyboard every time it is needed based on the current state of the frontmost "File" menu.  That approach is safer than reinstating an already built "File" keyboard from the BranchStack.
+The rationale for this difference is unclear at present.  A related question is whether the BabyBlissBot palettes will ever be dynamic.
 
-Thus, dynamic keyboards do not participate in the BranchStack navigation technique.   What happens if they have a "Back" button?  It is unclear if they do have "Back" keys since there is no running version of GOK to experiment with.  There are two possibilities:  One is that they do not have a "Back" key at all.  Or, if they do have a "Back" button, it would act as a quick jump back to the last statically defined keyboard on the BranchStack, the one that started the navigation down through a series of dynamically built keyboards.  And, it should be labelled appropriately, e.g., "Back to Main".
 
 
 
