@@ -23,7 +23,21 @@ The main elements are:
   - attribute `type`, an enum:
 
       ```
-      { normal, branch, branchBack, branchWindows, settings, modifier, mouse, mousebutton }
+      {
+          normal,
+          branch,
+          branchBack,
+          branchWindows,
+          branchMeuus,
+          branchToolbars,
+          branchAlphabet,
+          branchGUI,
+          branchEditText,
+          settings,
+          modifier,
+          mouse,
+          mousebutton
+      }
       ```
   - attribute `modifier`, used if the `type=modifier`.  An enum:
 

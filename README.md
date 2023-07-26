@@ -50,11 +50,11 @@ loaded by the GOK software at run time, as needed.  The document
 [GOKKeyboardPersistence.md](./GOKKeyboardPersistence.md) describes the XML
 format used and suggests a way to encode the same information using JSON.
 
-## Keyboard Layout Techniques
+## Keyboard Navigation
 
-TBD
+How GOK handled navigating forward and back among various keyboards is documented in [GOKKeyboardNavigationLayers.md](./GOKKeyboardNavigationLayers.md).
 
-## Selection Methods
+## Keyboard Editor
 
 TBD
 

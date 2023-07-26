@@ -44,7 +44,6 @@
                 "bottom": 2,
                 "type": "mouse",
                 "dir": "northwest",
-                "label": "Northwest",
                 "image": {
                     "url": "NW.png",
                     "type": "fixed:20,20"
@@ -57,7 +56,6 @@
                 "bottom": 2,
                 "type": "mouse",
                 "dir": "north",
-                "label": "North",
                 "image": {
                     "url": "North.png",
                     "type": "fixed:20,20"
@@ -70,7 +68,6 @@
                 "bottom": 2,
                 "type": "mouse",
                 "dir": "northeast",
-                "label": "Northeast",
                 "image": {
                     "url": "NE.png",
                     "type": "fixed:20,20"
@@ -92,7 +89,6 @@
                 "bottom": 3,
                 "type": "mouse",
                 "dir": "west",
-                "label": "West",
                 "image": {
                     "url": "West.png",
                     "type": "fixed:20,20"
@@ -114,7 +110,6 @@
                 "bottom": 3,
                 "type": "mouse",
                 "dir": "east",
-                "label": "East",
                 "image": {
                     "url": "East.png",
                     "type": "fixed:20,20"
@@ -136,7 +131,6 @@
                 "bottom": 4,
                 "type": "mouse",
                 "dir": "southwest",
-                "label": "Southwest",
                 "image": {
                     "url": "SW.png",
                     "type": "fixed:20,20"
@@ -149,7 +143,6 @@
                 "bottom": 4,
                 "type": "mouse",
                 "dir": "south",
-                "label": "South",
                 "image": {
                     "url": "South.png",
                     "type": "fixed:20,20"
@@ -161,8 +154,6 @@
                 "top": 3,
                 "bottom": 4,
                 "type": "mouse",
-                "dir": "southeast",
-                "label": "Southeast",
                 "image": {
                     "url": "SE.png",
                     "type": "fixed:20,20"
