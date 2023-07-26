@@ -1,0 +1,132 @@
+<html>
+<head>
+    <script src="../js/palette.js"></script>
+    <script src="../js/paletteStore.js"></script>
+    <script src="../js/branchStack.js"></script>
+    <script>
+        var globalPaletteStore = new PaletteStore();
+        var globalBranchStack = new BranchStack();
+        
+        function loadMainPalette() {
+            const mousePalette = Palette.createAndRenderPalette(
+                "http://127.0.0.1:8080/src/keyboards/mouseKbd.json",
+                document.getElementById("keyboard-container"),
+                globalPaletteStore,
+                globalBranchStack
+            )
+            const mainPalette = Palette.createAndRenderPalette(
+                "http://127.0.0.1:8080/src/keyboards/mainKbd.json",
+                document.getElementById("mainKbd-container"),
+                globalPaletteStore,
+                globalBranchStack
+            )
+            Promise.all([mousePalette, mainPalette]).then(navigationHookup); 
+        }
+
+        /* 
+         * Brute force wire up of the Main-to-Mouse-palette logic.
+         */
+        function navigationHookup(values) {
+            const mainPalette = globalPaletteStore.getNamedPalette('main');
+            const mousePaletteNavKey = mainPalette.keys.mouse;
+            mousePaletteNavKey.widget.addEventListener("click", (event) => {
+                console.log(`${event.target.id} key was clicked`);
+                var mousePalette = globalPaletteStore.getNamedPalette("mouse");
+                globalBranchStack.push(mainPalette);
+                mousePalette.layoutKeyboard(document.getElementById("mainKbd-container"), globalBranchStack);
+            });
+        }
+        
+        function setupForDemo() {
+            document.getElementById("mainHeading").style.display = "none";
+            document.getElementById("mouseHeading").style.display = "none";
+            document.getElementById("demo").style.display = "none";
+            document.getElementById("keyboard-container").style.display = "none";
+            document.getElementById("demo").style.display = "none";
+        }
+
+    </script>
+    <style>
+        /* Colour/border for the keyboard container */
+        .keyboard-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            border: 2px solid #f76707;
+            border-radius: 5px;
+            background-color: gray;
+            width: 500px;
+        }
+        /* Colours/borders for the cells */
+        .keyboard-container > button {
+            border: 2px solid gray;
+            border-radius: 5px;
+            background-color: #0000aa;
+            padding: 1em;
+            color: #cccccc;
+            font-size: 1em;
+        }
+        .keyboard-container > button > img {
+            max-width: 50%;
+            max-height: 50%
+        }
+        .keyboard-container > button:hover {
+            background-color: #cccccc;
+            color: #0000aa
+        }
+        #output {
+            border: 2px solid #f76707;
+            border-radius: 5px;
+            margin-bottom: 1em;
+            width: 500px;
+            height: 3em;
+        }
+        #output > img {
+            width: 50%;
+            height: 50%;
+        }
+
+        /* Colour/border for the container for rendering all palettes. */
+        /* Used initially to show the "Main" keyboard, thereafter all of them */
+        #mainKbd-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            border: 2px solid #f76707;
+            border-radius: 5px;
+            background-color: gray;
+            width: 500px;
+        }
+        /* Colours/borders for the cells */
+        #mainKbd-container > button {
+            border: 2px solid gray;
+            border-radius: 5px;
+            background-color: #0000aa;
+            padding: 1em;
+            color: #cccccc;
+            font-size: 1em;
+        }
+        #mainKbd-container > button > img {
+            max-width: 50%;
+            max-height: 50%
+        }
+        #mainKbd-container > button:hover {
+            background-color: #cccccc;
+            color: #0000aa
+        }
+    </style>
+</head>
+<body onload="loadMainPalette()">
+    <!--
+    <p id="output"></p>
+    <p><button onclick="document.getElementById('output').innerText = ''";>Clear</button></p>
+    -->
+    <h3 id="mainHeading">Main keyboard</h3>
+    <div id="mainKbd-container"></div>
+    <hr>
+    <h3 id="mouseHeading">Mouse keyboard</h3>
+    <div id="keyboard-container"></div>
+    <div id="demo">
+        <hr>
+        <button onclick="setupForDemo();">Demo</button>
+    </div>
+</body>
+</html>
