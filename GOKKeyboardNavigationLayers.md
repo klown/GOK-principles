@@ -22,6 +22,7 @@ A `<key>` element has `type` and `target` properties.  With respect to navigatio
 
   - `branch` - `target` value specifies the name of the keyboard to navigate to,
   - `branchBack` - no `target`; use the BranchStack to navigate back,
+  - `branchModal` - `target` value is the "move-resize" keyboard, used to position and resize the active window.
   - `branchMenus` - no `target`; dynamically create and navigate to a "Menus" keyboard,
   - `branchToolbars` - no `target`; dynamically create and navigate to a "Tool bars" keyboard,
   - `branchMenuItems` - no `target`; dynamically create and navigate to a "Menu Items" keyboard,
