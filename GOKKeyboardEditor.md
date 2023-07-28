@@ -11,7 +11,7 @@
 ## Editor Window GUI Tree
 
 <figure>
-    <img src="./images/GOKEditorGUI.png alt="GOK Editor GUI">
+    <img src="./images/GOKEditorGUI.png" alt="GOK Editor GUI">
     <figcaption>Glade Image of GOK Editor GUI</figcaption>
 </figure>
 
