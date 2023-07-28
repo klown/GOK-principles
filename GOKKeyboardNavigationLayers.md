@@ -41,6 +41,12 @@ All keyboards have a `bDynamciallyCreated` property, a boolean that declares if 
 
 The rationale for this difference is unclear at present.  A related question is whether the BabyBlissBot palettes will ever be dynamic.
 
+## Implications for the Baby Bliss Bot Project
+
+1. The principle of having pre-set targets, like "branchMenus" is not a bad one.  But, it can be handled by the more general `{ type: "branch", target: "<some target>" }` specifier.  It's not clear what the advantage is for specific targets.  But, it is clear that it is unlikely that all of these specific special cases are useful to the BBB project.  For example, it's difficult to see the need for a menus layer in the BBB OSk, hence, the use of a "branchMenus" specifier.
+2. The general `branch/target` combined with the BranchStack is a useful technique for setting up and handling forward and backward navigation.  It could be used by the BBB OSK.
+3. It's unlikely that the BBB project will support dynamic keyboards.  I suspect that all of the keyboards will be defined by the keyboard editor and will be pre-set for each individual user.  At runtime, only those pre-set palettes will be used.  GOK's need for dynamic layering was because it grabbed the contents of the current state of the UI to build some of its keyboards.  Since the UI was constantly changing -- different menus, different toolbars, different open windows, and so on -- it could not have a pre-built set of palettes for all of these eventualities.  Is that necessary for the BBB OSK?
+
 
 
 
