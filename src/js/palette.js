@@ -132,7 +132,7 @@ class Palette {
             var newText;
             if (anItem.image) {
                 var imgElement = document.createElement("img");
-                imgElement.setAttribute("src", anItem.image.url);
+                imgElement.setAttribute("src", `../keyboards/${anItem.image.url}`);
                 imgElement.setAttribute("alt", "");
                 newKey.appendChild(imgElement);
                 newKey.appendChild(document.createElement('br'));

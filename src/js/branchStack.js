@@ -37,7 +37,7 @@ class BranchStack {
      */
     isEmpty () {
         return this.branchBackStack.length === 0;
-   }
+    }
     
     /**
      * Puah a palette onto the top of the branch stack.  If the palette was
@@ -75,7 +75,7 @@ class BranchStack {
         } else {
             // Using Array.pop(): the palette at the end of the array is
             // returned
-            console.log(`Palette ${palette.name} popped off stack`);
+            console.log(`Popping ${this.branchBackStack[0].name} off branch back stack`);
             this.pushPopDelta--;
             return this.branchBackStack.pop();
         }
