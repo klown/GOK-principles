@@ -6,13 +6,15 @@
   - Glade was an editor for creating the GUI for a GNOME application.  It is no longer supported.
 - The GOK editing environment was either a single window with a properties editor and a keyboard preview, or two separate windows.
 - Users interacted with the properties editor, and used the preview window for feedback.
-- The preview display was not interactive
+- The preview display was not interactive.
 
 ## Editor Window GUI Tree
 
+Note that the Glade file for the keyboard editor required an older version of Glade than was available at the time this following screen shot was taken.  The "FIXME" error messages are a result of using the later version of Glade.
+
 <figure>
     <img src="./images/GOKEditorGUI.png" alt="GOK Editor GUI">
-    <figcaption>Glade Image of GOK Editor GUI</figcaption>
+    <figcaption>Glade Image of GOK Editor User Interface</figcaption>
 </figure>
 
 - Window -- "GOK Keyboard Editor"
