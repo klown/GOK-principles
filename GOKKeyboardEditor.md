@@ -31,7 +31,7 @@
          - Text Entry -- "Name:' -- edit the name of keyboard
          - Check box -- "Word Completion" -- whether this keyboard supports word completion
      - **Key** section down left side
-         - For navigating among the keys on this keybaord
+         - For navigating among the keys on this keyboard
          - Button -- "-> Next Key"
          - Button -- "<- Previous Key"
          - Horizontal separator
@@ -46,7 +46,7 @@
              - choices are `{ shift, ctrl, alt, capslock, mod4, none }`
          - Combobox/Menu -- "Style"
              - many choices; some examples: `{ normal, branch, toggleselect, ...}`
-             - Note: the Style of a key determines its colours, whether it contains a checkbox to indicate it is a toggle, and so on.  The Style is similar to a CSS class.  BUT, the Style does not provide position nor size information.
+             - Note: the Style of a key determines its colours, whether it contains a checkbox to indicate it is a toggle, and so on.  The Style is similar to a CSS class.  BUT, the Style does not provide position nor size information.  That is given in the **Position** section, below.
          - **Position** section
              - Four spin buttons -- "Left", "Right", "Top", "Bottom".
              - Values range from zero to 100
@@ -57,8 +57,8 @@
              - there are [45 types of keys](https://gitlab.gnome.org/Archive/gok/-/blob/master/gok/gok-key.h#L43).
           - **Modifier** section
              - Combobox/Menu -- "Name"
-                 - choices are { shift, ctrl, alt, capslock, mod4 }
-                 - used if the `type` above was set to `modifier`.
+                 - choices are `{ toggle, select-toggle }`
+                 - used if the `type` above was set to `modifier`; this choice specifies the `modifiertype`.  For example, if the `type` is `modifier` and the `modifier` is `capslock`, the `modifiertype` is `toggle`.
              - Radio buttons -- "3 State" and "Toggle"
              - Buttons -- "New" and "Delete"
           - **Branch** section

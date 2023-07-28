@@ -28,7 +28,7 @@ The main elements are:
           branch,
           branchBack,
           branchWindows,
-          branchMeuus,
+          branchMenus,
           branchToolbars,
           branchAlphabet,
           branchGUI,
@@ -235,7 +235,7 @@ In the second case, each key has a unique id.  The array is replaced with a
 structure.  For illustrative purposes the ids are based on the key's label.
 
 For a Bliss palette, imagine that the key ids are BCI identifiers or some other
-Bliss symbol identfier, that the `image` property is an url to a graphic for
+Bliss symbol identifier, that the `image` property is an url to a graphic for
 the Bliss symbol, and the `label` is the text that appears on the "key".
 
 ```

@@ -5,7 +5,7 @@
 </figure>
 
 The GNOME Onscreen Keyboard (GOK) was an ATRC (now IDRC) from the early 2000s.  
-It provided a way for person with motor disabilites to control their desktop.
+It provided a way for person with motor disabilities to control their desktop.
 
 ***Dynamic*** - GOK was dynamic in two senses.  First, activating a key in the
 current keyboard frequently navigated to a new keyboard with a different set of
@@ -20,7 +20,7 @@ would navigate back to the just previously shown keyboard, and, in some cases,
 there were special keys to immediately navigate back up an entire hierarchy
 quickly rather than pressing a long series of "Back" keys.
 
-GOK implmented a way to read a pre-defined keyboard from a keyboard description
+GOK implemented a way to read a pre-defined keyboard from a keyboard description
 file.  However, GOK was dynamic in a second sense where some of the keyboards
 were created at runtime.  GOK had the ability, thanks to the GNOME accessibility
 API, to query the current GUI and then create keys and a keyboard that
@@ -56,5 +56,5 @@ How GOK handled navigating forward and back among various keyboards is documente
 
 ## Keyboard Editor
 
-TBD
+GOK provided a GUI-based keyboard editor application for creating and editing keyboards.  How this system worked is documented in [GOKKeyboardEditor.md](./GOKKeyboardEditor.md)
 
