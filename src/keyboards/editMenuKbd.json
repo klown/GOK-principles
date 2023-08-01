@@ -1,0 +1,64 @@
+{
+    "keyboard": {
+        "name": "editMenu",
+        "wordcompletion": false,
+        "keys": {
+            "back": {
+                "left": 0,
+                "right": 1,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchBack",
+                "label": "Back"
+            },
+            "undo": {
+                "left": 1,
+                "right": 2,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Undo"
+            },
+            "redo": {
+                "left": 2,
+                "right": 3,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Redo"
+            },
+            "cut": {
+                "left": 3,
+                "right": 4,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Cut"
+            },
+            "copy": {
+                "left": 4,
+                "right": 5,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Copy"
+            },
+            "paste": {
+                "left": 4,
+                "right": 6,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Paste"
+            },
+            "delete": {
+                "left": 6,
+                "right": 7,
+                "top": 0,
+                "bottom": 1,
+                "type": "normal",
+                "label": "Delete"
+            }
+        }
+    }
+}

@@ -58,7 +58,7 @@ class Palette {
             if (previousPalette) {
                 previousPalette.layoutKeyboard(keyboardContainerEl);
             } else {
-                console.err("No previous palette to go back to");
+                console.error("No previous palette to go back to");
             }
         });
         palette.backConfigured = true;
@@ -108,7 +108,7 @@ class Palette {
     }
     
     layoutKeyboard (keyboardContainer, branchStack) {
-        if (this.rootDiv !== null) {
+        if (this.rootDiv !== null && keyboardContainer !== null) {
             if (keyboardContainer === this.rootDiv.parent) {
                 console.log("THEY BE EQUAL");
             }
@@ -168,7 +168,9 @@ class Palette {
                 }
             }
         })
-        keyboardContainer.appendChild(this.rootDiv);
+        if (keyboardContainer !== null) {
+            keyboardContainer.appendChild(this.rootDiv);
+        }
     }
     
     addKeyToOutput(event) {

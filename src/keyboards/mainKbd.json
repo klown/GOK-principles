@@ -8,7 +8,8 @@
                 "right": 2,
                 "top": 2,
                 "bottom": 3,
-                "type": "branchMenus",
+                "type": "branch",
+                "target": "menubar",
                 "label": "Menus"
             },
             "compose": {

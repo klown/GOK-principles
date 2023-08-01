@@ -20,7 +20,21 @@
                 globalPaletteStore,
                 globalBranchStack
             )
-            Promise.all([mousePalette, mainPalette]).then(navigationHookup); 
+            const menuBarPalette = Palette.createAndRenderPalette(
+                "http://127.0.0.1:8080/src/keyboards/menuBarKbd.json",
+                null,   // DON'T RENDER
+                globalPaletteStore,
+                globalBranchStack
+            )
+            const editMenuPalette = Palette.createAndRenderPalette(
+                "http://127.0.0.1:8080/src/keyboards/editMenuKbd.json",
+                null,   // DON'T RENDER
+                globalPaletteStore,
+                globalBranchStack
+            )
+            Promise.all([
+                mousePalette, mainPalette, menuBarPalette, editMenuPalette
+            ]).then(navigationHookup);
         }
 
         /* 
@@ -34,6 +48,29 @@
                 var mousePalette = globalPaletteStore.getNamedPalette("mouse");
                 globalBranchStack.push(mainPalette);
                 mousePalette.layoutKeyboard(document.getElementById("mainKbd-container"), globalBranchStack);
+            });
+            // More general solution
+            globalPaletteStore.paletteList.forEach((paletteName) => {
+                console.log(`Palette name is ${paletteName}`);
+                var aPalette = globalPaletteStore.getNamedPalette(paletteName);
+                Object.keys(aPalette.keys).forEach((keyID) => {
+                    var aKey = aPalette.keys[keyID];
+                    console.log(`....processing ${aKey.label} of ${paletteName}`);
+                    if (aKey.type === "branch" && aKey.target !== null) {
+                        console.log(`....${aKey.label} isa branch key with target = ${aKey.target}`);
+                        // Don't handle Main-to-Mouse navigation; already done above
+                        if (aKey.target === "mouse") {
+                            return;
+                        }
+                        var targetPalette = globalPaletteStore.getNamedPalette(aKey.target);
+                        if (targetPalette !== null) {
+                            aKey.widget.addEventListener('click', (event) => {
+                                globalBranchStack.push(aPalette);
+                                targetPalette.layoutKeyboard(document.getElementById("mainKbd-container"), globalBranchStack);
+                            });
+                        }
+                    }
+                });
             });
         }
         
