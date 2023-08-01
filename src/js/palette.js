@@ -52,6 +52,9 @@ class Palette {
         if (!backKey || palette.backConfigured) {
             return;
         }
+        var classString = backKey.widget.getAttribute("class");
+        classString = `${classString} branchBack`;
+        backKey.widget.setAttribute("class", classString);
         backKey.widget.addEventListener('click', function (event) {
             console.log(`Back handler: the rendering div is <div id="${keyboardContainerEl.id}"`);
             const previousPalette = branchStack.pop();
