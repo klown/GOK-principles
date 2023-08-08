@@ -9,25 +9,25 @@
         
         function loadMainPalette() {
             const mousePalette = Palette.createAndRenderPalette(
-                "http://127.0.0.1:8080/src/keyboards/mouseKbd.json",
+                "../keyboards/mouseKbd.json",
                 document.getElementById("keyboard-container"),
                 globalPaletteStore,
                 globalBranchStack
             )
             const mainPalette = Palette.createAndRenderPalette(
-                "http://127.0.0.1:8080/src/keyboards/mainKbd.json",
+                "../keyboards/mainKbd.json",
                 document.getElementById("mainKbd-container"),
                 globalPaletteStore,
                 globalBranchStack
             )
             const menuBarPalette = Palette.createAndRenderPalette(
-                "http://127.0.0.1:8080/src/keyboards/menuBarKbd.json",
+                "../keyboards/menuBarKbd.json",
                 null,   // DON'T RENDER
                 globalPaletteStore,
                 globalBranchStack
             )
             const editMenuPalette = Palette.createAndRenderPalette(
-                "http://127.0.0.1:8080/src/keyboards/editMenuKbd.json",
+                "../keyboards/editMenuKbd.json",
                 null,   // DON'T RENDER
                 globalPaletteStore,
                 globalBranchStack
