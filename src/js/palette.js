@@ -37,36 +37,6 @@ class Palette {
         return palettePromise;
     }
 
-    /* 
-     * Add a handler for any "Back" key in a palette, to go back to the prevous
-     * palette.
-     * @param palette {Palette} - The palette that with a "Back" key.
-     * @param branchStack {BranchStack} - Instance that tracks the layers.
-     * @param keyboardContainerEl {Element} - Where to render the previous
-     *                                        palette.
-     */
-    static addBackHandler (palette, branchStack, keyboardContainerEl) {
-        console.log(`Adding back handler, the rendering div is <div id="${keyboardContainerEl.id}"`);
-        // Only applies if there is a "Back" key.
-        const backKey = palette.keys["back"];
-        if (!backKey || palette.backConfigured) {
-            return;
-        }
-        var classString = backKey.widget.getAttribute("class");
-        classString = `${classString} branchBack`;
-        backKey.widget.setAttribute("class", classString);
-        backKey.widget.addEventListener('click', function (event) {
-            console.log(`Back handler: the rendering div is <div id="${keyboardContainerEl.id}"`);
-            const previousPalette = branchStack.pop();
-            if (previousPalette) {
-                previousPalette.layoutKeyboard(keyboardContainerEl);
-            } else {
-                console.error("No previous palette to go back to");
-            }
-        });
-        palette.backConfigured = true;
-    }
-
     constructor() {
         this.keys = {};
         this.backConfigured = false;
@@ -161,21 +131,29 @@ class Palette {
             if (right > this.numCols) {
                 row++;
             }
-            
-            // Branchback key handling
-            // TODO (JS): Need a better way to get at the "main keyboard display",
-            // It should be a configured piece of data accessed from anywhere.
-            if (anItem.type && anItem.type === "branchBack") {
-                if (!this.backConfigured) {
-                    Palette.addBackHandler(this, branchStack, document.getElementById("mainKbd-container"));
-                }
-            }
         })
+        // Branchback key handling.
+        // TODO (JS): Need a better way to get at the "main keyboard display",
+        // It should be a configured piece of data accessed from anywhere.
+        branchStack.initBackKey(this, document.getElementById("mainKbd-container"));
+
         if (keyboardContainer !== null) {
             keyboardContainer.appendChild(this.rootDiv);
         }
     }
     
+    /*
+     * Return the palette's back key, if any.  The key in question has a
+     * `type` of `branchBack`.  When the palette is searched, only the first key
+     * with `type=branchBack` is returned.
+     * @return - the first key of type `branchBack`; null if none found.
+     */
+    get backKey () {
+        const keyIDs = Object.keys(this.keys);
+        const backKeyID = keyIDs.find((keyID) => this.keys[keyID].type === "branchBack");
+        return (backKeyID ? this.keys[backKeyID] : null);
+    }
+
     addKeyToOutput(event) {
         const output = document.getElementById("output");  // yechh
         debugger;

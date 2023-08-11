@@ -45,29 +45,7 @@
          * navigates to the targetted palette.
          */
         function navigationHookup(values) {
-
-            // Loop through the palettes
-            globalPaletteStore.paletteList.forEach((paletteName) => {
-                console.log(`Palette name is ${paletteName}`);
-                var aPalette = globalPaletteStore.getNamedPalette(paletteName);
-
-                // Loop through the keys of the current palette looking for a
-                // key with a branch target.
-                Object.keys(aPalette.keys).forEach((keyID) => {
-                    var aKey = aPalette.keys[keyID];
-                    console.log(`....processing ${aKey.label} of ${paletteName}`);
-                    if (aKey.type === "branch" && aKey.target !== null) {
-                        console.log(`....${aKey.label} isa branch key with target = ${aKey.target}`);
-                        var targetPalette = globalPaletteStore.getNamedPalette(aKey.target);
-                        if (targetPalette !== null) {
-                            aKey.widget.addEventListener('click', (event) => {
-                                globalBranchStack.push(aPalette);
-                                targetPalette.layoutKeyboard(document.getElementById("mainKbd-container"), globalBranchStack);
-                            });
-                        }
-                    }
-                });
-            });
+            globalBranchStack.forwardNavigationHookup(globalPaletteStore, document.getElementById("mainKbd-container"));
         }
         
         function setupForDemo() {
