@@ -114,11 +114,11 @@ class BranchStack {
     }
 
     /*
-     * Set up branch back handler
-     * @param {Object} backKey The key on the palette that causes navigating
-     *                          back one palette.
+     * Set up the branch back handler for the given key
+     * @param {Object} backKey The key on a palette that causes navigating
+     *                         back one palette.
      * @param {HTMLElement} keyboardContainerEl The element on the page where
-     *                                          the palette should be renederd.
+     *                                          the palettes are rendered.
      */
     setupBranchBackHandler (backKey, keyboardContainerEl) {
         const theStack = this;
@@ -160,7 +160,7 @@ class BranchStack {
      *                                we are navigating away from.
      * @param {Palette} targetPalette - The palette to navigate to.
      * @param {HTMLElement} keyboardContainerEl - The element on the page where
-     *                                            the palette should be renederd.
+     *                                            the palette are rendered.
      */
     setupNavigateForwardHandler (navKey, fromPalette, targetPalette, keyboardContainerEl) {
         const theStack = this;
@@ -175,7 +175,7 @@ class BranchStack {
      * @param {Object} paletteStore - Object containing a list of all of the
      *                                palettes.
      * @param {HTMLElement} keyboardContainerEl - The element on the page where
-     *                                            the palette should be renederd.
+     *                                            the palette are rendered.
      */
     forwardNavigationHookup (paletteStore, keyboardContainerEl) {
         // Loop through the palettes
@@ -193,7 +193,7 @@ class BranchStack {
      * @param {Object} paletteStore - Object containing a list of all of the
      *                                palettes.
      * @param {HTMLElement} keyboardContainerEl - The element on the page where
-     *                                            the palette should be renederd.
+     *                                            the palette are rendered.
      */
     setupPaletteForwardNavigation (palette, paletteStore, keyboardContainerEl) {
         // Loop through the keys of the palette checking if that key navigates
