@@ -1,0 +1,68 @@
+<html>
+<head>
+    <link href="../css/keyboard.css" rel="stylesheet"></link>
+    <script src="../js/palette.js"></script>
+    <script src="../js/paletteStore.js"></script>
+    <script src="../js/branchStack.js"></script>
+    <script>
+        var globalPaletteStore = new PaletteStore();
+        var globalBranchStack = new BranchStack();
+
+        function loadPalettes() {
+            const mousePalette = Palette.createAndRenderPalette(
+                "../keyboards/mouseKbd.json",
+                document.getElementById("keyboard-container"),
+                globalPaletteStore,
+                globalBranchStack
+            )
+            const mainPalette = Palette.createAndRenderPalette(
+                "../keyboards/mainKbd.json",
+                document.getElementById("mainKbd-container"),
+                globalPaletteStore,
+                globalBranchStack
+            )
+            const menuBarPalette = Palette.createAndRenderPalette(
+                "../keyboards/menuBarKbd.json",
+                null,   // DON'T RENDER
+                globalPaletteStore,
+                globalBranchStack
+            )
+            const editMenuPalette = Palette.createAndRenderPalette(
+                "../keyboards/editMenuKbd.json",
+                null,   // DON'T RENDER
+                globalPaletteStore,
+                globalBranchStack
+            )
+            Promise.all([
+                mousePalette, mainPalette, menuBarPalette, editMenuPalette
+            ]).then(navigationHookup);
+        }
+
+        /*
+         * All palettes need to be built and referenced in the
+         * `globalPaletteStore`.  Each is examined for any forward navigation
+         * by looking for a key of type `branch` with a `target` in the
+         * `globalPaletteStore`.  If found, an event listener is attached that
+         * navigates to the targetted palette.
+         */
+        function navigationHookup(values) {
+            globalBranchStack.forwardNavigationHookup(globalPaletteStore, document.getElementById("mainKbd-container"));
+        }
+    </script>
+    <link href="../css/keyboard.css" rel="stylesheet"></link>
+</head>
+<body onload="loadPalettes()">
+    <h1>Palette Navigation Demonstration</h1>
+    <h2 id=keyboardName"></h2>
+    <div id="mainKbd-container"></div>
+    <hr>
+    <p>This is a demonstration of using a "branch back stack" to keep track of one's location is in a navigation sequences of palettes and provide a means of returning to a previous palette.</p>
+    <p>Notes:  Most keys on the palettes are non-functional in this demo.  The exceptions are:</p>
+    <ul>
+        <li>On Main palette, "Mouse" and "Menus" navigate to the Mouse and Menus palettes, respectively.</li>
+        <li>The Mouse palette does not provide any further forward navigation, and most of its keys are non-functional.  The "Back" key goes back to the Main palette.</li>
+        <li>On the Menus palette, the "Edit" key is the only key that navigates forward, and the "Back" key goes back to the Main palette.</li>
+        <li>On the Edit palette, there is no further forward navigation, and the "Back" key goes back to the Menus palette.</li>
+    <ul>
+</body>
+</html>
