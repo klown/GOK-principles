@@ -87,6 +87,11 @@ class Palette {
             }
             else {
                 keyboardContainer.replaceChildren(this.rootDiv);
+                // Hack to show the palette's name in the document
+                let element = document.getElementById("keyboardName");
+                if (element) {
+                    element.innerText = this.name;
+                }
             }
             return;
         }
@@ -139,6 +144,11 @@ class Palette {
 
         if (keyboardContainer !== null) {
             keyboardContainer.appendChild(this.rootDiv);
+            // Hack to show the palette's name in the document
+            let element = document.getElementById("keyboardName");
+            if (element) {
+                element.innerText = this.name;
+            }
         }
     }
     
