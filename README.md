@@ -52,9 +52,16 @@ format used and suggests a way to encode the same information using JSON.
 
 ## Keyboard Navigation
 
-How GOK handled navigating forward and back among various keyboards is documented in [GOKKeyboardNavigationLayers.md](./GOKKeyboardNavigationLayers.md).
+How GOK handled navigating forward and back among various keyboards is
+documented in [GOKKeyboardNavigationLayers.md](./GOKKeyboardNavigationLayers.md).
 
 ## Keyboard Editor
 
-GOK provided a GUI-based keyboard editor application for creating and editing keyboards.  How this system worked is documented in [GOKKeyboardEditor.md](./GOKKeyboardEditor.md)
+GOK provided a GUI-based keyboard editor application for creating and editing
+keyboards.  How this system worked is documented in [GOKKeyboardEditor.md](./GOKKeyboardEditor.md)
 
+## Navigation Demo
+
+[Demonstration](https://klown.github.io/GOK-principles/src/html/navigationDemo.html)
+of the use of a "branch back stack" to handle forward and backward
+navigation among palettes.
