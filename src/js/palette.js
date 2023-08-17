@@ -10,12 +10,13 @@
  */
 
 "use strict";
+import { Component } from "pract";
 
 class Palette {
     /* 
      * Fetch a palette definition file from the given url, create the palette,
      * and render it within the given page element.
-     * @param url {String} - The url to the palette defintion file (JSON).
+     * @param url {String} - The url to the palette definition file (JSON).
      * @param keyboardContainerEl {Element} - The HTML element that contains the
      *                                        palette.
      * @param paletteStore {PaletteStore} - Storage to keep track of completed
