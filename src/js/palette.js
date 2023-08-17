@@ -30,8 +30,9 @@ class Palette {
         palettePromise.then(function () {
             var rowsCols = palette.countRowsColumns();
             console.log(`rows: ${rowsCols.rows}, columns: ${rowsCols.cols}`);
-            palette.layoutKeyboard(keyboardContainerEl, branchStack);
+            palette.createKeyboard(branchStack);
             paletteStore.addPalette(palette);
+            palette.layoutKeyboard(keyboardContainerEl, branchStack);
             console.log(`Done: built ${palette.name}`);
         });
         return palettePromise;
@@ -80,28 +81,27 @@ class Palette {
         return { rows: this.numRows, cols: this.numCols };
     }
     
-    layoutKeyboard (keyboardContainer, branchStack) {
-        if (this.rootDiv !== null && keyboardContainer !== null) {
-            if (keyboardContainer === this.rootDiv.parent) {
-                console.log("THEY BE EQUAL");
-            }
-            else {
-                keyboardContainer.replaceChildren(this.rootDiv);
-                // Hack to show the palette's name in the document
-                let element = document.getElementById("keyboardName");
-                if (element) {
-                    element.innerText = this.name;
-                }
-            }
-            return;
-        }
-        // Restyle the `keyboardContainer` in terms of the number of columns
+    /*
+     * Create the keyboard and its keys:
+     * 1. Create a root <div> to hold all of the keys,
+     * 2. Style the root <div> using CSS grid display,
+     * 3. Create <button>s for each key to support user interaction,
+     * 4. Layout the <buttons> according to the keys' defined positions/sizes,
+     * 5. Setup any "branch back" keys.
+     * @param {Object} branchStack - the branch back stack used for navigation.
+     */
+    createKeyboard (branchStack) {
+        // Create a <div> to hold the entire keyboard.  Then set its grid
+        // CSS display in terms of the number of columns
         this.rootDiv = document.createElement("div")
         this.rootDiv.setAttribute('class', 'keyboard-container');
         var style = this.rootDiv.style;
         style['background-color'] = 'gray';
         style['grid-template-columns'] = `repeat(${this.numCols}, auto)`;
 
+        // Loop to associate an interactive element with each key in
+        // the palette, and set that element up in terms of its label and/or
+        // TODO (JS):  Make keys a separate class?
         const items = Object.values(this.keys);
         var row = 1;
         items.forEach((anItem) => {
@@ -120,8 +120,10 @@ class Palette {
                 newKey.setAttribute("id", anItem.label);
                 newKey.appendChild(newText);
             }
-//            newKey.addEventListener("click", this.addKeyToOutput)
-            // GOK keyboards are zero-based, grid CSS is one-based.
+            // Set the style of the button to fit in the CSS display grid.  The
+            // coordinates specified in the JSON are zero-based, whereas grid
+            // CSS is one-based.
+            // TODO (JS): revisit to make the JSON match the CSS.
             const left = anItem.left + 1;
             const right = anItem.right + 1;
             const top = anItem.top + 1;
@@ -131,7 +133,7 @@ class Palette {
             this.rootDiv.appendChild(newKey);
             anItem.widget = newKey;
             
-            // Update rows count -- if reached the end of a row, move to
+            // Update row count -- if reached the end of a row, move to
             // to the next row.
             if (right > this.numCols) {
                 row++;
@@ -141,13 +143,28 @@ class Palette {
         // TODO (JS): Need a better way to get at the "main keyboard display",
         // It should be a configured piece of data accessed from anywhere.
         branchStack.initBackKey(this, document.getElementById("mainKbd-container"));
+    }
 
+    /*
+     * Render the keyboard on screen.  If the keyboard has not been created,
+     * do that first.
+     * @param {Element} keyboardContainer - The main HTML element inside of
+     *                                      which to display the palette.
+     * @param {Object} branchStack - the branch back stack used for navigation.
+     */
+    layoutKeyboard (keyboardContainer, branchStack) {
+        // Render the keyboard:  if the palette has a root div, it has been
+        // configured and is ready to be rendered on screen.
         if (keyboardContainer !== null) {
-            keyboardContainer.appendChild(this.rootDiv);
-            // Hack to show the palette's name in the document
-            let element = document.getElementById("keyboardName");
-            if (element) {
-                element.innerText = this.name;
+            if (this.rootDiv === null) {
+                this.createKeyboard (branchStack);
+            } else {
+                keyboardContainer.replaceChildren(this.rootDiv);
+                // Hack to show the palette's name in the document
+                let element = document.getElementById("keyboardName");
+                if (element) {
+                    element.innerText = this.name;
+                }
             }
         }
     }
