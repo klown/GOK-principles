@@ -1,0 +1,178 @@
+{
+    "keyboard": {
+        "name": "mouse",
+        "wordcompletion": false,
+        "expand": "sometimes",
+        "keys": {
+            "back": {
+                "left": 0,
+                "right": 1,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchBack",
+                "label": "Back"
+            },
+            "latch": {
+                "left": 1,
+                "right": 2,
+                "top": 0,
+                "bottom": 1,
+                "type": "mousebutton",
+                "action": "latch",
+                "label": "Latch"
+            },
+            "pointer": {
+                "left": 2,
+                "right": 4,
+                "top": 0,
+                "bottom": 1,
+                "type": "pointer",
+                "label": "Pointer"
+            },
+            "repeat": {
+                "left": 4,
+                "right": 6,
+                "top": 0,
+                "bottom": 1,
+                "type": "repeat-next",
+                "label": "Repeat"
+            },
+            "northwest": {
+                "left": 0,
+                "right": 1,
+                "top": 1,
+                "bottom": 2,
+                "type": "mouse",
+                "dir": "northwest",
+                "image": {
+                    "url": "NW.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "north": {
+                "left": 1,
+                "right": 3,
+                "top": 1,
+                "bottom": 2,
+                "type": "mouse",
+                "dir": "north",
+                "label": "North",
+                "image": {
+                    "url": "North.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "northeast": {
+                "left": 3,
+                "right": 4,
+                "top": 1,
+                "bottom": 2,
+                "type": "mouse",
+                "dir": "northeast",
+                "image": {
+                    "url": "NE.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "button1": {
+                "left": 4,
+                "right": 6,
+                "top": 1,
+                "bottom": 2,
+                "type": "mousebutton",
+                "action": "button1",
+                "label": "Button 1"
+            },
+            "west": {
+                "left": 0,
+                "right": 1,
+                "top": 2,
+                "bottom": 3,
+                "type": "mouse",
+                "dir": "west",
+                "label": "West",
+                "image": {
+                    "url": "West.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "double1": {
+                "left": 1,
+                "right": 3,
+                "top": 2,
+                "bottom": 3,
+                "type": "mousebutton",
+                "action": "double1",
+                "label": "Dbl click"
+            },
+            "east": {
+                "left": 3,
+                "right": 4,
+                "top": 2,
+                "bottom": 3,
+                "type": "mouse",
+                "dir": "east",
+                "label": "East",
+                "image": {
+                    "url": "East.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "button2": {
+                "left": 4,
+                "right": 6,
+                "top": 2,
+                "bottom": 3,
+                "type": "mousebutton",
+                "action": "button2",
+                "label": "Button 2"
+            },
+            "southwest": {
+                "left": 0,
+                "right": 1,
+                "top": 3,
+                "bottom": 4,
+                "type": "mouse",
+                "dir": "southwest",
+                "image": {
+                    "url": "SW.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "south": {
+                "left": 1,
+                "right": 3,
+                "top": 3,
+                "bottom": 4,
+                "type": "mouse",
+                "dir": "south",
+                "label": "South",
+                "image": {
+                    "url": "South.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "southeast": {
+                "left": 3,
+                "right": 4,
+                "top": 3,
+                "bottom": 4,
+                "type": "mouse",
+                "dir": "southeast",
+                "image": {
+                    "url": "SE.png",
+                    "type": "fixed:20,20"
+                }
+            },
+            "button3": {
+                "left": 4,
+                "right": 6,
+                "top": 3,
+                "bottom": 4,
+                "type": "mousebutton",
+                "action": "button3",
+                "label": "Button 3"
+            }
+        }
+    }
+}

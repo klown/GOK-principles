@@ -1,0 +1,86 @@
+{
+    "keyboard": {
+        "name": "main",
+        "wordcompletion": false,
+        "keys": {
+            "menus": {
+                "left": 0,
+                "right": 2,
+                "top": 2,
+                "bottom": 3,
+                "type": "branch",
+                "target": "menubar",
+                "label": "Menus"
+            },
+            "compose": {
+                "left": 0,
+                "right": 2,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchCompose",
+                "target": "Keyboard",
+                "label": "Compose"
+            },
+            "window": {
+                "left": 2,
+                "right": 4,
+                "top": 0,
+                "bottom": 1,
+                "type": "branchModal",
+                "target": "move-resize",
+                "label": "Window"
+            },
+            "mouse": {
+                "left": 4,
+                "right": 6,
+                "top": 0,
+                "bottom": 1,
+                "type": "branch",
+                "target": "mouse",
+                "label": "Mouse"
+            },
+            "activate": {
+                "left": 2,
+                "right": 4,
+                "top": 1,
+                "bottom": 2,
+                "type": "branchWindows",
+                "label": "Activate"
+            },
+            "toolbars": {
+                "left": 2,
+                "right": 4,
+                "top": 2,
+                "bottom": 3,
+                "type": "branchToolbars",
+                "label": "Toolbars"
+            },
+            "gok": {
+                "left": 4,
+                "right": 6,
+                "top": 1,
+                "bottom": 2,
+                "type": "branchSettings",
+                "target": "gok-controls",
+                "label": "GOK"
+            },
+            "uigrab": {
+                "left": 4,
+                "right": 6,
+                "top": 2,
+                "bottom": 3,
+                "type": "branchGUI",
+                "label": "UI Grab"
+            },
+            "Launcher": {
+                "left": 0,
+                "right": 2,
+                "top": 1,
+                "bottom": 2,
+                "type": "branch",
+                "target": "launcher",
+                "label": "Launcher"
+            }
+        }
+    }
+}
