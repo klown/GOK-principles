@@ -12,6 +12,7 @@
 "use strict";
 
 import { render, Component } from "preact";
+import { html } from "htm/preact";
 import { PaletteKey } from "./PaletteKey.js";
 import { PaletteStore } from "./PaletteStore.js";
 import { BranchStack } from "./BranchStack.js";
@@ -132,9 +133,9 @@ class Palette extends Component {
     
             if (anItem.image) {
                 var srcUrl = `./src/keyboards/${anItem.image.url}`;
-                anItem.widget = <PaletteKey id={itemLabel} class="button" style={gridStyles} src={srcUrl} alt="">{itemLabel}</PaletteKey>
+                anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} src=${srcUrl} alt="" children=${itemLabel} />`;
             } else {
-                anItem.widget = <PaletteKey id={itemLabel} class="button" style={gridStyles}>{itemLabel}</PaletteKey>
+                anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} children=${itemLabel} />`;
             }
             
             // Update row count -- if reached the end of a row, move to
@@ -164,14 +165,14 @@ class Palette extends Component {
     render (props) {
         const rowsCols = this.countRowsColumns();
         const styles = `background-color: gray; grid-template-columns: repeat(${rowsCols.cols}, auto)`;
-        return (
+        return (html`
             <div>
-                <h3 style="text-align: center">{this.name}</h3>
-                <div class="keyboard-container" style={styles}>
-                    {this.keysArray}
+                <h3 style="text-align: center">${this.name}</h3>
+                <div class="keyboard-container" style=${styles}>
+                    ${this.keysArray}
                 </div>
             </div>
-        );
+        `);
     }
     
     /*
@@ -195,11 +196,14 @@ var globalPaletteStore = new PaletteStore();
 var globalBranchStack = new BranchStack();
 
 import mainKbdJson from "./keyboards/mainKbd.json";
-render(<Palette json={mainKbdJson}/>, document.getElementById("mainKbd-container"));
+render(<Palette json={mainKbdJson} />, document.getElementById("mainKbd-container"));
 
 import mouseKbdJson from "./keyboards/mouseKbd.json";
-render(<Palette json={mouseKbdJson}/>, document.getElementById("mouseKbd-container"));
+render(<Palette json={mouseKbdJson} />, document.getElementById("mouseKbd-container"));
 
 
 // var palettePromise = Palette.createPalette("./src/keyboards/mainKbd.json", globalPaletteStore, globalBranchStack);
 var x = 5;
+var y = 32;
+console.log(x + y);
+

@@ -11,26 +11,24 @@
 
 "use strict";
 
-import { Component } from "preact";
+import { render } from "preact";
+import { useState } from "preact/hooks";
+import { html } from "htm/preact";
 
-export class PaletteKey extends Component {
-    state = {hasImage: false};
-    imgSrc = "";
-    imgAlt = "";   
-    
-    setImageProperties (src, alt) {
-        imgSrc = src;
-        imgAlt = alt;
-        this.state.hasImage = true; // use this.setState()?
-    }
-    
-    render(props) {
-        return (
-            <button class={props.class} id={props.id} style={props.style}>
-              {this.props.src ? <img src={this.props.src} alt={this.props.alt} /> : ""}
-              {this.props.src ? <br /> : ""}
-              {props.children}
+export function PaletteKey (props) {
+    if (props.src && props.src !== "") {
+        return html`
+            <button class="${props.class}" id="${props.id}" style="${props.style}">
+              <img src="${props.src}" alt="${props.alt}" /> <br/>
+              ${props.children}
             </button>
-        );
+        `
+    } else {
+        return html`
+            <button class="${props.class}" id="${props.id}" style="${props.style}">
+                ${props.children}
+            </button>
+        `                        
     }
 }
+
