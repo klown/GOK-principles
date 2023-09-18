@@ -16,19 +16,19 @@ import { useState } from "preact/hooks";
 import { html } from "htm/preact";
 
 export function PaletteKey (props) {
-    if (props.src && props.src !== "") {
-        return html`
-            <button class="${props.class}" id="${props.id}" style="${props.style}">
-              <img src="${props.src}" alt="${props.alt}" /> <br/>
-              ${props.children}
-            </button>
-        `
-    } else {
-        return html`
-            <button class="${props.class}" id="${props.id}" style="${props.style}">
-                ${props.children}
-            </button>
-        `                        
-    }
+  if (props.src && props.src !== "") {
+    return html`
+      <button class="${props.class}" id="${props.id}" style="${props.style}">
+        <img src="${props.src}" alt="${props.alt}" /> <br/>
+        ${props.children}
+      </button>
+    `
+  } else {
+    return html`
+      <button class="${props.class}" id="${props.id}" style="${props.style}">
+        ${props.children}
+      </button>
+    `            
+  }
 }
 

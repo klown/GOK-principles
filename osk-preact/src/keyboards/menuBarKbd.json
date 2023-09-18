@@ -1,81 +1,81 @@
 {
-    "keyboard": {
-        "name": "menubar",
-        "wordcompletion": false,
-        "keys": {
-            "back": {
-                "left": 0,
-                "right": 1,
-                "top": 0,
-                "bottom": 1,
-                "type": "branchBack",
-                "label": "Back"
-            },
-            "file": {
-                "left": 1,
-                "right": 2,
-                "top": 0,
-                "bottom": 1,
-                "type": "branch",
-                "label": "File"
-            },
-            "edit": {
-                "left": 2,
-                "right": 3,
-                "top": 0,
-                "bottom": 1,
-                "type": "branch",
-                "target": "editMenu",
-                "label": "Edit"
-            },
-            "view": {
-                "left": 3,
-                "right": 4,
-                "top": 0,
-                "bottom": 1,
-                "type": "branch",
-                "label": "View"
-            },
-            "history": {
-                "left": 4,
-                "right": 5,
-                "top": 0,
-                "bottom": 1,
-                "type": "branch",
-                "label": "History"
-            },
-            "bookmarks": {
-                "left": 0,
-                "right": 1,
-                "top": 1,
-                "bottom": 2,
-                "type": "branch",
-                "label": "Bookmarks"
-            },
-            "tools": {
-                "left": 1,
-                "right": 2,
-                "top": 1,
-                "bottom": 2,
-                "type": "branch",
-                "label": "Tools"
-            },
-            "window": {
-                "left": 2,
-                "right": 3,
-                "top": 1,
-                "bottom": 2,
-                "type": "branch",
-                "label": "Windows"
-            },
-            "help": {
-                "left": 3,
-                "right": 4,
-                "top": 1,
-                "bottom": 2,
-                "type": "branch",
-                "label": "Help"
-            }
-        }
+  "keyboard": {
+    "name": "menubar",
+    "wordcompletion": false,
+    "keys": {
+      "back": {
+        "left": 0,
+        "right": 1,
+        "top": 0,
+        "bottom": 1,
+        "type": "branchBack",
+        "label": "Back"
+      },
+      "file": {
+        "left": 1,
+        "right": 2,
+        "top": 0,
+        "bottom": 1,
+        "type": "branch",
+        "label": "File"
+      },
+      "edit": {
+        "left": 2,
+        "right": 3,
+        "top": 0,
+        "bottom": 1,
+        "type": "branch",
+        "target": "editMenu",
+        "label": "Edit"
+      },
+      "view": {
+        "left": 3,
+        "right": 4,
+        "top": 0,
+        "bottom": 1,
+        "type": "branch",
+        "label": "View"
+      },
+      "history": {
+        "left": 4,
+        "right": 5,
+        "top": 0,
+        "bottom": 1,
+        "type": "branch",
+        "label": "History"
+      },
+      "bookmarks": {
+        "left": 0,
+        "right": 1,
+        "top": 1,
+        "bottom": 2,
+        "type": "branch",
+        "label": "Bookmarks"
+      },
+      "tools": {
+        "left": 1,
+        "right": 2,
+        "top": 1,
+        "bottom": 2,
+        "type": "branch",
+        "label": "Tools"
+      },
+      "window": {
+        "left": 2,
+        "right": 3,
+        "top": 1,
+        "bottom": 2,
+        "type": "branch",
+        "label": "Windows"
+      },
+      "help": {
+        "left": 3,
+        "right": 4,
+        "top": 1,
+        "bottom": 2,
+        "type": "branch",
+        "label": "Help"
+      }
     }
+  }
 }
