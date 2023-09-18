@@ -11,7 +11,7 @@
 
 "use strict";
 
-import { render, Component } from "preact";
+import { render } from "preact";
 import { html } from "htm/preact";
 import { PaletteKey } from "./PaletteKey.js";
 import { PaletteStore } from "./PaletteStore.js";
@@ -120,89 +120,24 @@ function layoutPalette (paletteDefinition, branchStack) {
   // TODO (JS): Need a better way to get at the "main keyboard display",
 //      branchStack.initBackKey(this, document.getElementById("mainKbd-container"));
 
-  // All of the palette's keys are initialized; store the array in the
-  // `paletteDefinition` parameter.
-  // TODO:  (JS) Consider the array as a return value.
-  paletteDefinition.keysArray = keysArray;
+  return keysArray;
 }
 
-class Palette extends Component {
-  /* 
-   * Fetch a palette definition file from the given url and create the palette.
-   * @param url {String} - The url to the palette definition file (JSON).
-   * @param paletteStore {PaletteStore} - Storage to keep track of completed
-   *                    palettes.
-   * @param branchStack {BranchStack} - For tracking navigation from
-   *                    palette-to-palette.
-   * @return {Promise} This is asynchronous due to loading the JSON
-   *           definition of the palette.
-   */
-  static createPalette (url, paletteStore, branchStack) {
-    var palette = new Palette();
-    var palettePromise = fromJsonUrl(url);
-    palettePromise.then(function (jsonPalette) {
-      palette.fromJson(jsonPalette.keyboard);
-      var rowsCols = countRowsColumns(palette);
-      console.log(`rows: ${rowsCols.rows}, columns: ${rowsCols.cols}`);
-      palette.createKeyboard(branchStack);
-      paletteStore.addPalette(palette);
-      console.log(`Done: built ${palette.name}`);
-    });
-    return palettePromise;
-  }
+function Palette (props) {
   
-  state = {configured: false};
+  var paletteDefinition = props.json.keyboard;
+  const rowsCols = countRowsColumns(paletteDefinition);
+  const styles = `background-color: gray; grid-template-columns: repeat(${rowsCols.cols}, auto)`;
+  const paletteKeys = layoutPalette (paletteDefinition, globalBranchStack);
   
-  constructor () {
-    super();
-    this.keys = {};
-    this.keysConfigured = false;
-    this.backConfigured = false;
-    this.keysArray = [];
-  }
-
-  fromJson (json) {
-    Object.assign(this, json);
-    return this;
-  }
-
-  componentDidMount () {
-    if (!this.keysConfigured && this.props.json) {
-      this.fromJson(this.props.json.keyboard);
-      layoutPalette(this, globalBranchStack);
-    }
-    this.setState({configured: true});
-  }
-
-  /*
-   * Render the keyboard on screen.  If the keyboard has not been created,
-   * do that first.
-   * @param {Object} props - Propoerties passed in by the main renderer.
-   */
-  render (props) {
-    const rowsCols = countRowsColumns(this);
-    const styles = `background-color: gray; grid-template-columns: repeat(${rowsCols.cols}, auto)`;
-    return (html`
+  return html`
       <div>
-        <h3 style="text-align: center">${this.name}</h3>
+        <h3 style="text-align: center">${paletteDefinition.name}</h3>
         <div class="keyboard-container" style=${styles}>
-          ${this.keysArray}
+          ${paletteKeys}
         </div>
       </div>
-    `);
-  }
-  
-  /*
-   * Return the palette's back key, if any.  The key in question has a
-   * `type` of `branchBack`.  When the palette is searched, only the first key
-   * with `type=branchBack` is returned.
-   * @return - the first key of type `branchBack`; null if none found.
-   */
-  get backKey () {
-    const keyIDs = Object.keys(this.keys);
-    const backKeyID = keyIDs.find((keyID) => this.keys[keyID].type === "branchBack");
-    return (backKeyID ? this.keys[backKeyID] : null);
-  }
+  `;
 }
 
 // Debugging code to get the main and mouse palettes loaded and rendered.
