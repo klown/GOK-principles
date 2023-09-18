@@ -17,6 +17,115 @@ import { PaletteKey } from "./PaletteKey.js";
 import { PaletteStore } from "./PaletteStore.js";
 import { BranchStack } from "./BranchStack.js";
 
+/**
+ * Retrieve the json file that defines the palette (keyboard).
+ *
+ * @param {String} jsonUrl - The URL of the JSON definition file for a palette.
+ * @return {Object} - The palette taken from the `keyboard` member of the JSON.
+ */
+async function fromJsonUrl (jsonUrl) {
+  try {
+    var request = new Request(jsonUrl);
+    const response = await fetch(request);
+    const json = await response.json();
+    return json.keyboard;
+  }
+  catch (err) {
+    console.error(err);
+    console.log(response.status)
+    return null;
+  }
+}
+
+/**
+ * Given a palette defined as a set of properties, compute the number of rows
+ * and columns in that palette.
+ *
+ * @param {Object} paletteDefinition - An object that lists the positions,
+ *                 heights and widths of the keys in the palette.
+ * @return {Object} - The row and column counts: `{ rows: ..., cols: ...}`.
+ */
+function countRowsColumns (paletteDefinition) {
+  var rowCount = 0;
+  var colCount = 0;
+  const items = Object.values(paletteDefinition.keys);
+  items.forEach((anItem) => {
+    if (anItem.right > colCount) {
+      colCount = anItem.right;
+    }
+    if (anItem.bottom > rowCount) {
+      rowCount = anItem.bottom;
+    }
+  });
+  return { rows: rowCount, cols: colCount };
+}
+
+/**
+ * Create the palette's PaletteKeys and position them in their proper locations.
+ * 1. Create a root <div> to hold all of the PaletteKeys,
+ * 2. Style the root <div> using CSS grid display,
+ * 3. Create and layout the PaletteKeys according to their positions/sizes,
+ * 5. Setup any "branch back" keys (pending).
+ * 6. Create sn array of PaletteKeys and store them in the passed in
+ *    {pelletDefinition.keysArray}.
+ * @param {Object} paletteDefinition - The properties of the palette and its
+ *                                     keys.
+ * @param {Object} branchStack - The branch-back stack used for navigation.
+ */
+function layoutPalette (paletteDefinition, branchStack) {
+  // Create a <div> to hold the entire keyboard.  Then set its grid
+  // CSS display in terms of the number of columns
+  var rootDiv = document.createElement("div");
+  rootDiv.setAttribute('class', 'keyboard-container');
+
+  // Determine the number of rows and columns and set up some of the grid CSS.
+  const rowsCols = countRowsColumns(paletteDefinition);
+  var style = rootDiv.style;
+  style['background-color'] = 'gray';
+  style['grid-template-columns'] = `repeat(${rowsCols.numCols}, auto)`;
+
+  // Loop to associate an interactive element with each key in
+  // the palette, and set that element up in terms of its label and/or
+  // TODO (JS):  Make keys a separate class?
+  const items = Object.values(paletteDefinition.keys);
+  var row = 1;
+  var keysArray = [];
+  items.forEach((anItem) => {
+    // Set the style of the button to fit in the CSS display grid.  The
+    // coordinates specified in the JSON are zero-based, whereas grid
+    // CSS is one-based.
+    // TODO (JS): revisit to make the JSON match the CSS.
+    const left = anItem.left + 1;
+    const right = anItem.right + 1;
+    const top = anItem.top + 1;
+    const bottom = anItem.bottom + 1;
+    const gridStyles = `grid-column: ${left} / ${right}; grid-row: ${top} / ${bottom}`;
+    const itemLabel = anItem.label || "";
+
+    if (anItem.image) {
+      var srcUrl = `./src/keyboards/${anItem.image.url}`;
+      anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} src=${srcUrl} alt="" children=${itemLabel} />`;
+    } else {
+      anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} children=${itemLabel} />`;
+    }
+    keysArray.push(anItem.widget);
+    // Update row count -- if reached the end of a row, move to
+    // to the next row.
+    if (right > rowsCols.numCols) {
+      row++;
+    }
+  });
+  // Branchback key handling.
+  // TODO (JS): Hook up navigation,
+  // TODO (JS): Need a better way to get at the "main keyboard display",
+//      branchStack.initBackKey(this, document.getElementById("mainKbd-container"));
+
+  // All of the palette's keys are initialized; store the array in the
+  // `paletteDefinition` parameter.
+  // TODO:  (JS) Consider the array as a return value.
+  paletteDefinition.keysArray = keysArray;
+}
+
 class Palette extends Component {
   /* 
    * Fetch a palette definition file from the given url and create the palette.
@@ -30,9 +139,10 @@ class Palette extends Component {
    */
   static createPalette (url, paletteStore, branchStack) {
     var palette = new Palette();
-    var palettePromise = palette.fromJsonUrl(url);
-    palettePromise.then(function () {
-      var rowsCols = palette.countRowsColumns();
+    var palettePromise = fromJsonUrl(url);
+    palettePromise.then(function (jsonPalette) {
+      palette.fromJson(jsonPalette.keyboard);
+      var rowsCols = countRowsColumns(palette);
       console.log(`rows: ${rowsCols.rows}, columns: ${rowsCols.cols}`);
       palette.createKeyboard(branchStack);
       paletteStore.addPalette(palette);
@@ -51,110 +161,17 @@ class Palette extends Component {
     this.keysArray = [];
   }
 
-  async fromJsonUrl (jsonUrl) {
-    try {
-      var request = new Request(jsonUrl);
-      const response = await fetch(request);
-      const json = await response.json();
-      this.fromJson(json.keyboard);
-      return true;
-    }
-    catch (err) {
-      console.error(err);
-      console.log(response.status)
-      return false;
-    }
-  }
-
   fromJson (json) {
     Object.assign(this, json);
     return this;
   }
 
-  countRowsColumns () {
-    var rows = 0;
-    var cols = 0;
-    const items = Object.values(this.keys);
-    items.forEach((anItem) => {
-      if (anItem.right > cols) {
-        cols = anItem.right;
-      }
-      if (anItem.bottom > rows) {
-        rows = anItem.bottom;
-      }
-    });
-    this.numRows = rows;
-    this.numCols = cols;
-    return { rows: this.numRows, cols: this.numCols };
-  }
-  
   componentDidMount () {
     if (!this.keysConfigured && this.props.json) {
       this.fromJson(this.props.json.keyboard);
-      this.createKeyboard(globalBranchStack);
+      layoutPalette(this, globalBranchStack);
     }
     this.setState({configured: true});
-  }
-  
-  /*
-   * Create the keyboard and its keys:
-   * 1. Create a root <div> to hold all of the keys,
-   * 2. Style the root <div> using CSS grid display,
-   * 3. Create <button>s for each key to support user interaction,
-   * 4. Layout the <buttons> according to the keys' defined positions/sizes,
-   * 5. Setup any "branch back" keys.
-   * @param {Object} branchStack - the branch back stack used for navigation.
-   */
-  createKeyboard (branchStack) {
-    // Create a <div> to hold the entire keyboard.  Then set its grid
-    // CSS display in terms of the number of columns
-    this.rootDiv = document.createElement("div")
-    this.rootDiv.setAttribute('class', 'keyboard-container');
-    var style = this.rootDiv.style;
-    style['background-color'] = 'gray';
-    style['grid-template-columns'] = `repeat(${this.numCols}, auto)`;
-
-    // Loop to associate an interactive element with each key in
-    // the palette, and set that element up in terms of its label and/or
-    // TODO (JS):  Make keys a separate class?
-    const items = Object.values(this.keys);
-    var row = 1;
-    items.forEach((anItem) => {
-      // Set the style of the button to fit in the CSS display grid.  The
-      // coordinates specified in the JSON are zero-based, whereas grid
-      // CSS is one-based.
-      // TODO (JS): revisit to make the JSON match the CSS.
-      const left = anItem.left + 1;
-      const right = anItem.right + 1;
-      const top = anItem.top + 1;
-      const bottom = anItem.bottom + 1;
-      const gridStyles = `grid-column: ${left} / ${right}; grid-row: ${top} / ${bottom}`;
-      const itemLabel = anItem.label || "";
-  
-      if (anItem.image) {
-        var srcUrl = `./src/keyboards/${anItem.image.url}`;
-        anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} src=${srcUrl} alt="" children=${itemLabel} />`;
-      } else {
-        anItem.widget = html`<${PaletteKey} id=${itemLabel} class="button" style=${gridStyles} children=${itemLabel} />`;
-      }
-      
-      // Update row count -- if reached the end of a row, move to
-      // to the next row.
-      if (right > this.numCols) {
-        row++;
-      }
-    });
-    // Branchback key handling.
-    // TODO (JS): Need a better way to get at the "main keyboard display",
-    // It should be a configured piece of data accessed from anywhere.
-//      branchStack.initBackKey(this, document.getElementById("mainKbd-container"));
-    
-    // All of the palette's keys are initialized; create the key array
-    var keysArray = [];
-    items.forEach((anItem) => {
-      keysArray.push(anItem.widget);
-    });
-    this.keysArray = keysArray;
   }
 
   /*
@@ -163,7 +180,7 @@ class Palette extends Component {
    * @param {Object} props - Propoerties passed in by the main renderer.
    */
   render (props) {
-    const rowsCols = this.countRowsColumns();
+    const rowsCols = countRowsColumns(this);
     const styles = `background-color: gray; grid-template-columns: repeat(${rowsCols.cols}, auto)`;
     return (html`
       <div>
@@ -188,9 +205,7 @@ class Palette extends Component {
   }
 }
 
-
-// Really rough code just to get the main palette loaded and rendered.  Need
-// to figure out how to pass the url to the `mainKbd.json` file
+// Debugging code to get the main and mouse palettes loaded and rendered.
 
 var globalPaletteStore = new PaletteStore();
 var globalBranchStack = new BranchStack();
@@ -200,10 +215,4 @@ render(html`<${Palette} json=${mainKbdJson} />`, document.getElementById("mainKb
 
 import mouseKbdJson from "./keyboards/mouseKbd.json";
 render(html`<${Palette} json=${mouseKbdJson} />`, document.getElementById("mouseKbd-container"));
-
-
-// var palettePromise = Palette.createPalette("./src/keyboards/mainKbd.json", globalPaletteStore, globalBranchStack);
-var x = 5;
-var y = 32;
-console.log(x + y);
 
