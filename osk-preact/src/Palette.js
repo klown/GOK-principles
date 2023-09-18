@@ -196,10 +196,10 @@ var globalPaletteStore = new PaletteStore();
 var globalBranchStack = new BranchStack();
 
 import mainKbdJson from "./keyboards/mainKbd.json";
-render(<Palette json={mainKbdJson} />, document.getElementById("mainKbd-container"));
+render(html`<${Palette} json=${mainKbdJson} />`, document.getElementById("mainKbd-container"));
 
 import mouseKbdJson from "./keyboards/mouseKbd.json";
-render(<Palette json={mouseKbdJson} />, document.getElementById("mouseKbd-container"));
+render(html`<${Palette} json=${mouseKbdJson} />`, document.getElementById("mouseKbd-container"));
 
 
 // var palettePromise = Palette.createPalette("./src/keyboards/mainKbd.json", globalPaletteStore, globalBranchStack);
